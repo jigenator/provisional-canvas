@@ -1,9 +1,7 @@
+import { AppShell } from "@/components/layout/app-shell";
+
 function App() {
-  return (
-    <div>
-      <h1>Provisional Canvas</h1>
-    </div>
-  );
+  return <AppShell />;
 }
 
 export default App;
