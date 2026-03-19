@@ -117,7 +117,8 @@
 **Collapsed Zone Strip**
 
 - Consistent thin strip for all three collapsible zones
-- Contains: chevron icon + vertical text label (rotated -90 degrees, reads bottom-to-top)
+- Side panels: chevron icon + vertical text label (rotated -90 degrees, reads bottom-to-top)
+- Bottom panel: chevron icon + horizontal text label
 - Maintains spatial position when collapsed
 
 **Settings Modal**
