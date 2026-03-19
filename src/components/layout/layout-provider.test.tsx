@@ -19,6 +19,7 @@ function TestConsumer() {
       <button onClick={() => layout.resizePanel("left", 300)}>resize-left-300</button>
       <button onClick={() => layout.resizePanel("left", 100)}>resize-left-100</button>
       <button onClick={() => layout.resizePanel("left", 999)}>resize-left-999</button>
+      <button onClick={() => layout.resizePanelBy("left", 60)}>resize-left-by-60</button>
     </div>
   );
 }
@@ -126,6 +127,18 @@ describe("LayoutProvider", () => {
     expect(screen.getByTestId("left-size").textContent).toBe("300");
     expect(screen.getByTestId("bottom-collapsed").textContent).toBe("true");
     expect(screen.getByTestId("bottom-size").textContent).toBe("160");
+  });
+
+  it("resizePanelBy applies delta correctly", async () => {
+    const user = userEvent.setup();
+    render(
+      <LayoutProvider>
+        <TestConsumer />
+      </LayoutProvider>,
+    );
+    expect(screen.getByTestId("left-size").textContent).toBe("240");
+    await user.click(screen.getByText("resize-left-by-60"));
+    expect(screen.getByTestId("left-size").textContent).toBe("300");
   });
 
   it("throws when useLayout is used outside LayoutProvider", () => {

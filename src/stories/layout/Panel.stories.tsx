@@ -28,7 +28,7 @@ export const LeftPanel: Story = {
   args: {
     id: "left",
     title: "Tools",
-    defaultSize: 240,
+
     minSize: 180,
     maxSize: 400,
     resizeDirection: "right",
@@ -46,7 +46,7 @@ export const InboxPanel: Story = {
   args: {
     id: "inbox",
     title: "Inbox",
-    defaultSize: 280,
+
     minSize: 220,
     maxSize: 448,
     resizeDirection: "right",
@@ -79,7 +79,7 @@ export const BottomPanel: Story = {
   args: {
     id: "bottom",
     title: "Terminal",
-    defaultSize: 200,
+
     minSize: 120,
     maxSize: 400,
     resizeDirection: "top",

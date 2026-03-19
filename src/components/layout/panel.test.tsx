@@ -8,14 +8,7 @@ function renderPanel(id: "left" | "inbox" | "bottom" = "left") {
   return render(
     <LayoutProvider>
       <div style={{ display: "flex", height: 400 }}>
-        <Panel
-          id={id}
-          title="Test Panel"
-          defaultSize={240}
-          minSize={180}
-          maxSize={400}
-          resizeDirection="right"
-        >
+        <Panel id={id} title="Test Panel" minSize={180} maxSize={400} resizeDirection="right">
           <p>Panel content</p>
         </Panel>
       </div>
@@ -61,7 +54,6 @@ describe("Panel", () => {
           <Panel
             id="left"
             title="Tools"
-            defaultSize={240}
             minSize={180}
             maxSize={400}
             resizeDirection="right"

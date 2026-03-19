@@ -9,36 +9,15 @@ function AppShell() {
       <div className="flex h-screen flex-col">
         <TopBar />
         <div className="flex flex-1 overflow-hidden">
-          <Panel
-            id="left"
-            title="Tools"
-            resizeDirection="right"
-            defaultSize={240}
-            minSize={180}
-            maxSize={400}
-          >
+          <Panel id="left" title="Tools" resizeDirection="right" minSize={180} maxSize={400}>
             <p className="text-fg-secondary text-sm">Customizable blocks go here</p>
           </Panel>
-          <Panel
-            id="inbox"
-            title="Inbox"
-            resizeDirection="right"
-            defaultSize={280}
-            minSize={220}
-            maxSize={448}
-          >
+          <Panel id="inbox" title="Inbox" resizeDirection="right" minSize={220} maxSize={448}>
             <p className="text-fg-secondary text-sm">Inbox items go here</p>
           </Panel>
           <Workspace
             bottomPanel={
-              <Panel
-                id="bottom"
-                title="Terminal"
-                resizeDirection="top"
-                defaultSize={200}
-                minSize={120}
-                maxSize={400}
-              >
+              <Panel id="bottom" title="Terminal" resizeDirection="top" minSize={120} maxSize={400}>
                 <p className="text-fg-secondary text-sm">Terminal / logs go here</p>
               </Panel>
             }

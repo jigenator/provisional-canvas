@@ -4,6 +4,10 @@
 
 Install shadcn base primitives, create wrapper components for project-specific behavior, build custom layout components, write Storybook stories for everything, and compose into the four-zone layout shell.
 
+### Scope
+
+This spec covers the **desktop experience only**. Responsive behavior (tablet landscape/portrait, mobile) as described in `uiux_direction.md` is out of scope and will be designed separately. Panel collapse/expand in this pass uses flex shrink, not floating overlays.
+
 ### Design Decisions
 
 - **Panel architecture:** Single generic `Panel` component. The three collapsible panels (left, inbox, bottom) share enough behavior (collapse, resize, header, strip) that a single component with orientation/direction props is the right abstraction.
@@ -227,7 +231,7 @@ interface CollapsedStripProps {
 - Thin strip (~32px wide for vertical, ~32px tall for horizontal)
 - Chevron icon pointing toward expand direction
 - Text label rotated -90deg (reads bottom-to-top) for vertical strips
-- Text label horizontal for the bottom strip
+- Text label horizontal for the bottom strip (deviation from `uiux_direction.md` which specifies rotated text for all strips — horizontal text is more natural for a horizontal strip)
 - Click anywhere on strip to expand
 - `bg-surface-1`, subtle border on the workspace-facing edge
 

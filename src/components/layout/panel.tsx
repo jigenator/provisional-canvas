@@ -4,26 +4,18 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { ZoneHeader } from "./zone-header";
 import { CollapsedStrip } from "./collapsed-strip";
 import { ResizeHandle } from "./resize-handle";
-import { useLayout } from "./layout-provider";
+import { useLayout, PANEL_STATE_KEYS } from "./layout-provider";
 import type { PanelId } from "./layout-provider";
-import { cn } from "@/lib/utils";
 
 interface PanelProps {
   id: PanelId;
   title: string;
   headerActions?: ReactNode;
   children: ReactNode;
-  defaultSize: number;
   minSize: number;
   maxSize: number;
   resizeDirection: "right" | "left" | "top";
 }
-
-const PANEL_STATE_KEYS: Record<PanelId, "leftPanel" | "inbox" | "bottomPanel"> = {
-  left: "leftPanel",
-  inbox: "inbox",
-  bottom: "bottomPanel",
-};
 
 function Panel({
   id,
@@ -47,9 +39,9 @@ function Panel({
   const handleResize = useCallback(
     (delta: number) => {
       const multiplier = resizeDirection === "top" ? -1 : 1;
-      layout.resizePanel(id, panelState.size + delta * multiplier);
+      layout.resizePanelBy(id, delta * multiplier);
     },
-    [layout, id, panelState.size, resizeDirection],
+    [layout, id, resizeDirection],
   );
 
   if (panelState.collapsed) {
@@ -75,7 +67,7 @@ function Panel({
       {showResizeBefore && (
         <ResizeHandle orientation={resizeHandleOrientation} onResize={handleResize} />
       )}
-      <div className={cn("bg-surface-1 flex shrink-0 flex-col overflow-hidden")} style={sizeStyle}>
+      <div className="bg-surface-1 flex shrink-0 flex-col overflow-hidden" style={sizeStyle}>
         <ZoneHeader title={title} onCollapse={handleCollapse} actions={headerActions} />
         <ScrollArea className="flex-1">
           <div className="p-3">{children}</div>

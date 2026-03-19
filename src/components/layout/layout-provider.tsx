@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 
 interface PanelState {
   collapsed: boolean;
@@ -13,6 +13,7 @@ interface LayoutContextValue {
   bottomPanel: PanelState;
   togglePanel: (panel: PanelId) => void;
   resizePanel: (panel: PanelId, size: number) => void;
+  resizePanelBy: (panel: PanelId, delta: number) => void;
 }
 
 const STORAGE_KEY = "provisional-canvas-layout";
@@ -90,19 +91,31 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
     }));
   }, []);
 
-  return (
-    <LayoutContext.Provider
-      value={{
-        leftPanel: state.leftPanel,
-        inbox: state.inbox,
-        bottomPanel: state.bottomPanel,
-        togglePanel,
-        resizePanel,
-      }}
-    >
-      {children}
-    </LayoutContext.Provider>
+  const resizePanelBy = useCallback((panel: PanelId, delta: number) => {
+    const key = PANEL_STATE_KEYS[panel];
+    const constraints = PANEL_CONSTRAINTS[panel];
+    setState((prev) => {
+      const newSize = Math.max(constraints.min, Math.min(constraints.max, prev[key].size + delta));
+      return {
+        ...prev,
+        [key]: { ...prev[key], size: newSize },
+      };
+    });
+  }, []);
+
+  const value = useMemo(
+    () => ({
+      leftPanel: state.leftPanel,
+      inbox: state.inbox,
+      bottomPanel: state.bottomPanel,
+      togglePanel,
+      resizePanel,
+      resizePanelBy,
+    }),
+    [state.leftPanel, state.inbox, state.bottomPanel, togglePanel, resizePanel, resizePanelBy],
   );
+
+  return <LayoutContext.Provider value={value}>{children}</LayoutContext.Provider>;
 }
 
 function useLayout(): LayoutContextValue {
@@ -113,5 +126,5 @@ function useLayout(): LayoutContextValue {
   return context;
 }
 
-export { LayoutProvider, useLayout, PANEL_CONSTRAINTS };
+export { LayoutProvider, useLayout, PANEL_CONSTRAINTS, PANEL_STATE_KEYS };
 export type { PanelState, PanelId, LayoutContextValue };
