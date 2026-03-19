@@ -2,46 +2,55 @@
 
 ## Overview
 
-A single CSS custom properties file (`src/styles/tokens.css`) serving as the single source of truth for all design tokens in provisional-canvas. Tokens feed into shadcn/ui's variable system and Tailwind CSS config. Approach chosen: CSS Variables Only (no TypeScript tokens, no Tailwind-as-source).
+A single `globals.css` file serving as the single source of truth for all design tokens in provisional-canvas. Follows shadcn/ui v4 conventions: CSS custom properties in `:root`/`.dark` blocks, registered with Tailwind v4 via `@theme inline` directives. No separate `tailwind.config.ts` theme extension needed.
 
 ## Framework
 
 - **Vite + React**
-- **shadcn/ui** for component primitives
-- **Tailwind CSS** for utility classes, extending from CSS variables
+- **shadcn/ui v4** for component primitives
+- **Tailwind CSS v4** with `@theme inline` for utility class registration
 
 ## File Location
 
 ```
-src/styles/tokens.css
+src/styles/globals.css
 ```
 
-Imported once at the app root, before any other styles.
+This is the file shadcn's `components.json` points to via `"tailwind.css"`. Imported once at the app root.
 
 ## Structure
 
 ```
-tokens.css
-├── :root (light mode — default)
-│   ├── Colors — Surfaces
-│   ├── Colors — Foreground
-│   ├── Colors — Status
-│   ├── Colors — Accent
-│   ├── Colors — Border
-│   ├── Typography (families + sizes)
-│   ├── Spacing
-│   ├── Radius
-│   ├── Shadows
-│   ├── Motion
-│   └── shadcn Mappings
+globals.css
+├── @import "tailwindcss"
+├── @import "tw-animate-css"
+├── @import "shadcn/tailwind.css"
+├── @custom-variant dark (&:is(.dark *))
 │
-└── .dark
-    ├── Color overrides only
-    ├── Shadow overrides
-    └── shadcn Mapping overrides
+├── @theme inline
+│   ├── shadcn color registrations (--color-background, --color-primary, etc.)
+│   ├── Custom color registrations (--color-terminal, --color-surface-*, --color-status-*, etc.)
+│   ├── Custom font registrations (--font-ui, --font-mono)
+│   ├── Custom spacing registrations (--spacing-*)
+│   ├── Radius registrations (--radius-*)
+│   └── Custom utility registrations (shadow, duration, easing)
+│
+├── :root (light mode — default)
+│   ├── shadcn variables (--background, --foreground, --primary, etc.)
+│   ├── Custom variables (--terminal, --surface-*, --fg-*, --status-*, etc.)
+│   ├── Typography, spacing, radius, shadow, motion
+│
+├── .dark
+│   ├── Color overrides only
+│   └── Shadow overrides
+│
+└── @layer base
+    └── Default body styles
 ```
 
-Light mode is `:root` default. Dark mode is `.dark` class override. Non-color tokens (typography, spacing, radius, motion) are defined once in `:root` — they are mode-independent per the UI/UX direction doc.
+Light mode is `:root` default. Dark mode is `.dark` class override via `@custom-variant`. Non-color tokens (typography, spacing, radius, motion) are defined once in `:root` — they are mode-independent per the UI/UX direction doc.
+
+**Key convention:** shadcn variables use bare names (`--background`, `--primary`). Custom project variables use prefixed names (`--terminal`, `--surface-1`, `--status-running`). The `@theme inline` block registers both for Tailwind utility class access via the `--color-*` namespace.
 
 ## Token Values
 
@@ -51,25 +60,25 @@ Light mode is `:root` default. Dark mode is `.dark` class override. Non-color to
 
 | Token | Value | Role |
 |---|---|---|
-| `--color-terminal` | `#1E1E1E` | Deepest layer, terminal content |
-| `--color-bg` | `#232323` | Base background |
-| `--color-surface-1` | `#282828` | Zone backgrounds |
-| `--color-surface-2` | `#2E2E2E` | Elevated elements, blocks, floating item |
-| `--color-surface-3` | `#343434` | Hover states, active elements |
+| `--terminal` | `#1E1E1E` | Deepest layer, terminal content |
+| `--background` | `#232323` | Base background (shadcn) |
+| `--surface-1` | `#282828` | Zone backgrounds |
+| `--surface-2` | `#2E2E2E` | Elevated elements, blocks, floating item |
+| `--surface-3` | `#343434` | Hover states, active elements |
 
 **Foreground:**
 
 | Token | Value | Role |
 |---|---|---|
-| `--color-fg` | `#E8E4E0` | Primary text (near-white, slightly warm) |
-| `--color-fg-secondary` | `#9B9590` | Timestamps, captions, context lines |
-| `--color-fg-muted` | `#6B6560` | Disabled, placeholder text (exempt from WCAG contrast — see Accessibility) |
+| `--foreground` | `#E8E4E0` | Primary text (shadcn) |
+| `--fg-secondary` | `#9B9590` | Timestamps, captions, context lines |
+| `--fg-muted` | `#6B6560` | Disabled, placeholder text (exempt from WCAG contrast — see Accessibility) |
 
 **Border:**
 
 | Token | Value | Role |
 |---|---|---|
-| `--color-border` | `rgba(255, 255, 255, 0.08)` | Very subtle, barely visible |
+| `--border` | `rgba(255, 255, 255, 0.08)` | Very subtle, barely visible (shadcn) |
 
 ### Light Mode Colors (`:root` — Warm Cream palette)
 
@@ -79,25 +88,25 @@ Palette choice: "Warm Cream" (option B from brainstorming). Achieves the "notice
 
 | Token | Value | Role |
 |---|---|---|
-| `--color-terminal` | `#EDE7DE` | Slightly deeper than bg — maintains "window into something deeper" even in light mode |
-| `--color-bg` | `#F8F4EE` | Base background |
-| `--color-surface-1` | `#F2EDE6` | Zone backgrounds |
-| `--color-surface-2` | `#EBE5DC` | Elevated elements, blocks |
-| `--color-surface-3` | `#E3DCD2` | Hover states, active elements |
+| `--terminal` | `#EDE7DE` | Slightly deeper than bg — maintains "window into something deeper" even in light mode |
+| `--background` | `#F8F4EE` | Base background (shadcn) |
+| `--surface-1` | `#F2EDE6` | Zone backgrounds |
+| `--surface-2` | `#EBE5DC` | Elevated elements, blocks |
+| `--surface-3` | `#E3DCD2` | Hover states, active elements |
 
 **Foreground:**
 
 | Token | Value | Role |
 |---|---|---|
-| `--color-fg` | `#2A2522` | Primary text (warm near-black) |
-| `--color-fg-secondary` | `#756F6A` | Timestamps, captions (darkened from initial #8B8580 for 4.5:1 contrast on cream backgrounds) |
-| `--color-fg-muted` | `#B5AFA8` | Disabled, placeholder (exempt from WCAG contrast — see Accessibility) |
+| `--foreground` | `#2A2522` | Primary text (shadcn) |
+| `--fg-secondary` | `#756F6A` | Timestamps, captions (darkened from initial #8B8580 for 4.5:1 contrast on cream backgrounds) |
+| `--fg-muted` | `#B5AFA8` | Disabled, placeholder (exempt from WCAG contrast — see Accessibility) |
 
 **Border:**
 
 | Token | Value | Role |
 |---|---|---|
-| `--color-border` | `rgba(0, 0, 0, 0.08)` | Very subtle, barely visible |
+| `--border` | `rgba(0, 0, 0, 0.08)` | Very subtle, barely visible (shadcn) |
 
 ### Mode-Independent Colors
 
@@ -107,35 +116,52 @@ Status and accent colors are the same in both modes — designed to be vivid aga
 
 | Token | Value | Role |
 |---|---|---|
-| `--color-status-running` | `#5B9EE9` | Calm blue |
-| `--color-status-attention` | `#E5A84B` | Warm amber |
-| `--color-status-completed` | `#6BBF6B` | Fresh, slightly warm green |
-| `--color-status-error` | `#D4726C` | Soft coral |
-| `--color-status-idle` | `#8B82A8` | Gray-purple |
+| `--status-running` | `#5B9EE9` | Calm blue |
+| `--status-attention` | `#E5A84B` | Warm amber |
+| `--status-completed` | `#6BBF6B` | Fresh, slightly warm green |
+| `--status-error` | `#D4726C` | Soft coral |
+| `--status-idle` | `#8B82A8` | Gray-purple |
 
-**Status color usage:** These colors are used as visual indicators — status dots, left border accents, badge backgrounds, and icon tints — not as text colors. Text rendered on status-colored backgrounds (e.g., inside badges) uses `#FFFFFF` or `--color-fg` for contrast. The status colors themselves do not need to meet WCAG text contrast ratios against surface backgrounds because they serve as non-text graphical indicators (WCAG 1.4.11 requires 3:1 for graphical objects; all status colors meet this against dark mode surfaces, and in light mode the indicators are supplemented by shape/position so they are not contrast-dependent alone).
+**Status color usage:** These colors are used as visual indicators — status dots, left border accents, badge backgrounds, and icon tints — not as text colors. Text rendered on status-colored backgrounds (e.g., inside badges) uses `#FFFFFF` or `--foreground` for contrast. The status colors themselves do not need to meet WCAG text contrast ratios against surface backgrounds because they serve as non-text graphical indicators (WCAG 1.4.11 requires 3:1 for graphical objects; all status colors meet this against dark mode surfaces, and in light mode the indicators are supplemented by shape/position so they are not contrast-dependent alone).
 
-**Accent:**
+**Accent / Primary:**
 
 | Token | Value | Role |
 |---|---|---|
-| `--color-accent` | `#4E9E96` | Warm teal/muted cyan (darkened from initial #5BA8A0 for contrast compliance) |
+| `--primary` | `#4E9E96` | Warm teal/muted cyan (shadcn `--primary`, darkened from initial #5BA8A0 for contrast compliance) |
+| `--primary-foreground` | `#FFFFFF` | Text on primary/accent backgrounds (shadcn) |
 
-**Accent foreground (per-mode — contrast requirement):**
+`#FFFFFF` on `#4E9E96` yields ~3.3:1 (WCAG AA for large text/UI components at 3:1 minimum). Primary/accent is used for buttons and interactive highlights where text is rendered at `--text-body` (14px) or larger — meeting the large text/UI component threshold. For the rare case of small caption text on accent backgrounds, use `--foreground` instead.
 
-| Token | Light Mode | Dark Mode | Role |
+**Destructive:**
+
+| Token | Value | Role |
+|---|---|---|
+| `--destructive` | `#D4726C` | Soft coral (shadcn, same as `--status-error`) |
+| `--destructive-foreground` | `#FFFFFF` | Text on destructive backgrounds (shadcn) |
+
+`#FFFFFF` on `#D4726C` yields ~3.3:1 (WCAG AA for large text/UI components). Same usage pattern as primary — destructive actions are buttons with 14px+ text.
+
+### shadcn Derived Variables
+
+These are set in both `:root` and `.dark` to complete shadcn's expected variable set. Values reference the semantic tokens above.
+
+| Token | Light Mode Value | Dark Mode Value | Role |
 |---|---|---|---|
-| `--color-accent-fg` | `#FFFFFF` | `#FFFFFF` | Text on accent backgrounds |
+| `--card` | = `--surface-1` value | = `--surface-1` value | Card backgrounds |
+| `--card-foreground` | = `--foreground` value | = `--foreground` value | Card text |
+| `--popover` | = `--surface-1` value | = `--surface-1` value | Popover backgrounds |
+| `--popover-foreground` | = `--foreground` value | = `--foreground` value | Popover text |
+| `--secondary` | = `--surface-2` value | = `--surface-2` value | Secondary backgrounds |
+| `--secondary-foreground` | = `--foreground` value | = `--foreground` value | Secondary text |
+| `--muted` | = `--surface-2` value | = `--surface-2` value | Muted backgrounds |
+| `--muted-foreground` | = `--fg-secondary` value | = `--fg-secondary` value | Muted text |
+| `--accent` | = `--surface-3` value | = `--surface-3` value | Hover highlight backgrounds |
+| `--accent-foreground` | = `--foreground` value | = `--foreground` value | Hover highlight text |
+| `--input` | = `--border` value | = `--border` value | Input borders |
+| `--ring` | = `--primary` value | = `--primary` value | Focus rings |
 
-`#FFFFFF` on `#4E9E96` yields ~3.3:1 (WCAG AA for large text/UI components at 3:1 minimum). Accent is used for buttons and interactive highlights where text is rendered at `--text-body` (14px) or larger — meeting the large text/UI component threshold. For the rare case of small caption text on accent backgrounds, use `--color-fg` instead.
-
-**Destructive foreground:**
-
-| Token | Value | Role |
-|---|---|---|
-| `--color-destructive-fg` | `#FFFFFF` | Text on destructive/error backgrounds |
-
-`#FFFFFF` on `#D4726C` yields ~3.3:1 (WCAG AA for large text/UI components). Same usage pattern as accent — destructive actions are buttons with 14px+ text.
+Note: shadcn's `--accent` maps to `--surface-3` (hover/active surface), not the teal accent color. This is intentional — shadcn uses `accent` for subtle hover highlights on menu items and list rows, which aligns with our surface-3 role. The teal accent color maps to `--primary`.
 
 ### Typography
 
@@ -178,11 +204,19 @@ Base unit: `4px` (locked).
 
 ### Radius
 
-| Token | Value | Usage |
+shadcn v4 uses a single `--radius` base with calculated variants. We set the base and let shadcn derive the scale:
+
+| Token | Value | Note |
 |---|---|---|
-| `--radius-sm` | `4px` | Badges, tags, small elements |
-| `--radius-md` | `8px` | Blocks, cards, inputs |
-| `--radius-lg` | `12px` | Modals, overlays |
+| `--radius` | `0.5rem` (8px) | Base radius — shadcn derives sm/md/lg/xl/2xl via `calc()` multipliers |
+
+shadcn's derived scale from `--radius: 0.5rem`:
+- `--radius-sm`: `calc(0.5rem * 0.6)` = 4.8px (badges, tags)
+- `--radius-md`: `calc(0.5rem * 0.8)` = 6.4px (inputs)
+- `--radius-lg`: `0.5rem` = 8px (cards, blocks)
+- `--radius-xl`: `calc(0.5rem * 1.4)` = 11.2px (modals, overlays)
+
+This aligns with our target: ~4px small, ~8px blocks/cards, ~12px modals.
 
 ### Motion
 
@@ -204,108 +238,83 @@ Base unit: `4px` (locked).
 
 Per-mode values: dark backgrounds need stronger shadow opacity to be visible. Only for elements that float above the main canvas layer. All other depth via surface color layering.
 
-## shadcn Variable Mapping
+## Tailwind v4 Integration (`@theme inline`)
 
-shadcn expects specific variable names. These map to semantic tokens:
+Instead of a `tailwind.config.ts`, all custom utilities are registered via `@theme inline` in `globals.css`. This block maps CSS variables to Tailwind's utility namespace:
 
-| shadcn Variable | Maps To |
-|---|---|
-| `--background` | `--color-bg` |
-| `--foreground` | `--color-fg` |
-| `--card` | `--color-surface-1` |
-| `--card-foreground` | `--color-fg` |
-| `--primary` | `--color-accent` |
-| `--primary-foreground` | `--color-accent-fg` |
-| `--secondary` | `--color-surface-2` |
-| `--secondary-foreground` | `--color-fg` |
-| `--muted` | `--color-surface-2` |
-| `--muted-foreground` | `--color-fg-secondary` |
-| `--accent` | `--color-surface-3` |
-| `--accent-foreground` | `--color-fg` |
-| `--destructive` | `--color-status-error` |
-| `--destructive-foreground` | `--color-destructive-fg` |
-| `--border` | `--color-border` |
-| `--input` | `--color-border` |
-| `--ring` | `--color-accent` |
-| `--radius` | `--radius-md` |
+```css
+@theme inline {
+  /* shadcn standard colors (required) */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
 
-Note: shadcn's `--accent` maps to `--color-surface-3` (hover/active surface), not the teal accent color. This is intentional — shadcn uses `accent` for subtle hover highlights on menu items and list rows, which aligns with our surface-3 role. The teal accent color maps to `--primary`.
+  /* Custom project colors */
+  --color-terminal: var(--terminal);
+  --color-surface-1: var(--surface-1);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-fg-secondary: var(--fg-secondary);
+  --color-fg-muted: var(--fg-muted);
+  --color-status-running: var(--status-running);
+  --color-status-attention: var(--status-attention);
+  --color-status-completed: var(--status-completed);
+  --color-status-error: var(--status-error);
+  --color-status-idle: var(--status-idle);
 
-## Tailwind Integration
+  /* Radius — shadcn derives scale from --radius */
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
 
-`tailwind.config.ts` extends from CSS variables:
+  /* Typography */
+  --font-ui: var(--font-ui);
+  --font-mono: var(--font-mono);
 
-```ts
-theme: {
-  extend: {
-    colors: {
-      terminal: 'var(--color-terminal)',
-      bg: 'var(--color-bg)',
-      surface: {
-        1: 'var(--color-surface-1)',
-        2: 'var(--color-surface-2)',
-        3: 'var(--color-surface-3)',
-      },
-      fg: {
-        DEFAULT: 'var(--color-fg)',
-        secondary: 'var(--color-fg-secondary)',
-        muted: 'var(--color-fg-muted)',
-      },
-      status: {
-        running: 'var(--color-status-running)',
-        attention: 'var(--color-status-attention)',
-        completed: 'var(--color-status-completed)',
-        error: 'var(--color-status-error)',
-        idle: 'var(--color-status-idle)',
-      },
-      accent: {
-        DEFAULT: 'var(--color-accent)',
-        fg: 'var(--color-accent-fg)',
-      },
-      border: 'var(--color-border)',
-    },
-    fontFamily: {
-      ui: 'var(--font-ui)',
-      mono: 'var(--font-mono)',
-    },
-    fontSize: {
-      'heading-1': 'var(--text-heading-1)',
-      'heading-2': 'var(--text-heading-2)',
-      'heading-3': 'var(--text-heading-3)',
-      'body': 'var(--text-body)',
-      'caption': 'var(--text-caption)',
-      'code': 'var(--text-code)',
-    },
-    spacing: {
-      '1': 'var(--space-1)',
-      '2': 'var(--space-2)',
-      '3': 'var(--space-3)',
-      '4': 'var(--space-4)',
-      '5': 'var(--space-5)',
-      '6': 'var(--space-6)',
-      '8': 'var(--space-8)',
-      '10': 'var(--space-10)',
-      '12': 'var(--space-12)',
-      '16': 'var(--space-16)',
-    },
-    borderRadius: {
-      sm: 'var(--radius-sm)',
-      md: 'var(--radius-md)',
-      lg: 'var(--radius-lg)',
-    },
-    boxShadow: {
-      float: 'var(--shadow-float)',
-    },
-    transitionDuration: {
-      snappy: 'var(--duration-snappy)',
-      gentle: 'var(--duration-gentle)',
-      fade: 'var(--duration-fade)',
-    },
-    transitionTimingFunction: {
-      snappy: 'var(--ease-snappy)',
-      gentle: 'var(--ease-gentle)',
-    },
-  },
+  /* Custom spacing */
+  --spacing-1: var(--space-1);
+  --spacing-2: var(--space-2);
+  --spacing-3: var(--space-3);
+  --spacing-4: var(--space-4);
+  --spacing-5: var(--space-5);
+  --spacing-6: var(--space-6);
+  --spacing-8: var(--space-8);
+  --spacing-10: var(--space-10);
+  --spacing-12: var(--space-12);
+  --spacing-16: var(--space-16);
+}
+```
+
+This enables Tailwind utility classes like `bg-terminal`, `text-fg-secondary`, `text-status-running`, `bg-surface-1`, `rounded-lg`, `font-ui`, `p-4`, etc.
+
+## Base Layer
+
+```css
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-ui text-body;
+  }
 }
 ```
 
@@ -313,7 +322,7 @@ theme: {
 
 The docs specify the canvas is fully themeable. This token system supports theming by:
 
-1. A theme overrides the CSS variables in `tokens.css` (or provides an additional CSS file that overrides them)
+1. A theme provides a CSS file that overrides the variables in `:root` and `.dark` blocks
 2. Structural tokens (spacing base, grid) stay fixed per docs — "themes change how it looks, not how it works"
 3. Typography, colors, radius, shadows are all themeable
 
@@ -322,23 +331,25 @@ The docs specify the canvas is fully themeable. This token system supports themi
 ## Accessibility
 
 - All foreground/background text pairings meet WCAG AA (4.5:1 normal text, 3:1 large text/UI components), with two documented exceptions:
-  - `--color-fg-muted`: Exempt per WCAG 1.4.3 — used exclusively for disabled/inactive UI elements which are explicitly excluded from contrast requirements
-  - Status colors: Used as non-text graphical indicators (dots, borders, badges), not text colors. Text on status-colored backgrounds uses `#FFFFFF` or `--color-fg`. See Status section for details.
-- `--color-accent-fg` and `--color-destructive-fg` use `#FFFFFF` achieving ~3.3:1 on their respective backgrounds — meeting AA for UI components and large text (14px+ button text)
+  - `--fg-muted`: Exempt per WCAG 1.4.3 — used exclusively for disabled/inactive UI elements which are explicitly excluded from contrast requirements
+  - Status colors: Used as non-text graphical indicators (dots, borders, badges), not text colors. Text on status-colored backgrounds uses `#FFFFFF` or `--foreground`. See Status section for details.
+- `--primary-foreground` and `--destructive-foreground` use `#FFFFFF` achieving ~3.3:1 on their respective backgrounds — meeting AA for UI components and large text (14px+ button text)
 - `prefers-reduced-motion`: spatial duration tokens (`--duration-snappy`, `--duration-gentle`) set to `0ms`; opacity duration (`--duration-fade`) preserved. See Motion section for details.
 
 ## Design Decisions
 
+- **`globals.css` instead of `tokens.css`:** Follows shadcn v4 convention — all CSS variables and `@theme inline` registrations live in the global CSS file. No separate token file needed.
+- **Tailwind v4 `@theme inline` instead of `tailwind.config.ts`:** shadcn v4 convention. Variables are registered directly in CSS, eliminating the config file for theme extension.
+- **shadcn variable names as primary:** Instead of custom `--color-bg` / `--color-fg` names mapped to shadcn, we use shadcn's native names (`--background`, `--foreground`, `--primary`, etc.) directly. Custom tokens (`--terminal`, `--surface-*`, `--status-*`, `--fg-secondary`, `--fg-muted`) extend beyond shadcn's set.
+- **Single `--radius` base:** shadcn v4 derives its entire radius scale from one base value via `calc()` multipliers. We set `--radius: 0.5rem` (8px) and let the scale generate naturally, aligning with our target values.
 - **Light mode as `:root` default:** Matches shadcn convention and CSS best practice
 - **Font choices (DM Sans, JetBrains Mono):** Selected from directional candidates in UI/UX doc. DM Sans over Plus Jakarta Sans for warmer geometry at UI sizes. JetBrains Mono over Fira Code for broader language support. These can be swapped via theming if needed.
 - **14px body text default:** Balances information density (dense inbox, status counts, many visible items) with readability for all-day ambient use
-- **Mode-independent status/accent colors:** Simplifies theming, and the chosen values work on both warm cream and dark gray backgrounds
-- **Darkened `--color-accent` to `#4E9E96`:** Original `#5BA8A0` failed 3:1 with white text. Slightly darker teal preserves the warm teal character while meeting contrast.
-- **`--color-fg-secondary` darkened in light mode to `#756F6A`:** Original `#8B8580` failed 4.5:1 on cream backgrounds for normal text. Darker warm gray meets AA.
-- **`--color-destructive-fg` as dedicated token:** Consistent with the semantic token approach rather than hardcoding `#FFFFFF` in the shadcn mapping
+- **Mode-independent status colors:** Simplifies theming, and the chosen values work on both warm cream and dark gray backgrounds
+- **Darkened `--primary` to `#4E9E96`:** Original `#5BA8A0` failed 3:1 with white text. Slightly darker teal preserves the warm teal character while meeting contrast.
+- **`--fg-secondary` darkened in light mode to `#756F6A`:** Original `#8B8580` failed 4.5:1 on cream backgrounds for normal text. Darker warm gray meets AA.
 - **Per-mode `--shadow-float`:** Dark backgrounds absorb shadow; higher opacity needed for visibility
 - **Separate `--duration-fade` token:** Enables the `prefers-reduced-motion` strategy from the UI/UX doc (remove spatial animation, keep opacity fades)
 - **`rgba` borders:** Scale naturally with background changes rather than needing per-mode hex overrides
 - **Spacing scale skips 7, 9, 11, 13-15:** Follows Tailwind convention, covers practical needs without bloat
-- **Single shadow token:** Docs specify shadows only for floating elements — one level is sufficient
-- **shadcn `--accent` → `--color-surface-3`:** shadcn uses `accent` for hover highlights, not brand accent. Brand accent maps to `--primary`.
+- **shadcn `--accent` → `--surface-3`:** shadcn uses `accent` for hover highlights, not brand accent. Brand accent maps to `--primary`.
