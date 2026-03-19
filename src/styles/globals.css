@@ -79,11 +79,11 @@
   --border: rgba(0, 0, 0, 0.08);
 
   /* Primary / Accent */
-  --primary: #4e9e96;
+  --primary: #6184ff;
   --primary-foreground: #ffffff;
 
   /* Destructive */
-  --destructive: #d4726c;
+  --destructive: #ff3355;
   --destructive-foreground: #ffffff;
 
   /* shadcn derived variables */
@@ -98,14 +98,14 @@
   --accent: #e3dcd2;
   --accent-foreground: #2a2522;
   --input: rgba(0, 0, 0, 0.08);
-  --ring: #4e9e96;
+  --ring: #6184ff;
 
   /* Status (mode-independent) */
-  --status-running: #5b9ee9;
-  --status-attention: #e5a84b;
-  --status-completed: #6bbf6b;
-  --status-error: #d4726c;
-  --status-idle: #8b82a8;
+  --status-running: #00b4ff;
+  --status-attention: #ffaa00;
+  --status-completed: #00ff88;
+  --status-error: #ff3355;
+  --status-idle: #b366ff;
 
   /* Typography */
   --font-ui: "DM Sans", sans-serif;
@@ -160,11 +160,11 @@
   --border: rgba(255, 255, 255, 0.08);
 
   /* Primary / Accent (mode-independent, repeated for completeness) */
-  --primary: #4e9e96;
+  --primary: #6184ff;
   --primary-foreground: #ffffff;
 
   /* Destructive */
-  --destructive: #d4726c;
+  --destructive: #ff3355;
   --destructive-foreground: #ffffff;
 
   /* shadcn derived variables */
@@ -179,7 +179,7 @@
   --accent: #343434;
   --accent-foreground: #e8e4e0;
   --input: rgba(255, 255, 255, 0.08);
-  --ring: #4e9e96;
+  --ring: #6184ff;
 
   /* Shadows */
   --shadow-float: 0 8px 24px rgba(0, 0, 0, 0.4);
