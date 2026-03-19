@@ -58,26 +58,26 @@ Light mode is `:root` default. Dark mode is `.dark` class override via `@custom-
 
 **Surfaces (depth layering — terminal deepest, UI layers above):**
 
-| Token | Value | Role |
-|---|---|---|
-| `--terminal` | `#1E1E1E` | Deepest layer, terminal content |
-| `--background` | `#232323` | Base background (shadcn) |
-| `--surface-1` | `#282828` | Zone backgrounds |
-| `--surface-2` | `#2E2E2E` | Elevated elements, blocks, floating item |
-| `--surface-3` | `#343434` | Hover states, active elements |
+| Token          | Value     | Role                                     |
+| -------------- | --------- | ---------------------------------------- |
+| `--terminal`   | `#1E1E1E` | Deepest layer, terminal content          |
+| `--background` | `#232323` | Base background (shadcn)                 |
+| `--surface-1`  | `#282828` | Zone backgrounds                         |
+| `--surface-2`  | `#2E2E2E` | Elevated elements, blocks, floating item |
+| `--surface-3`  | `#343434` | Hover states, active elements            |
 
 **Foreground:**
 
-| Token | Value | Role |
-|---|---|---|
-| `--foreground` | `#E8E4E0` | Primary text (shadcn) |
-| `--fg-secondary` | `#9B9590` | Timestamps, captions, context lines |
-| `--fg-muted` | `#6B6560` | Disabled, placeholder text (exempt from WCAG contrast — see Accessibility) |
+| Token            | Value     | Role                                                                       |
+| ---------------- | --------- | -------------------------------------------------------------------------- |
+| `--foreground`   | `#E8E4E0` | Primary text (shadcn)                                                      |
+| `--fg-secondary` | `#9B9590` | Timestamps, captions, context lines                                        |
+| `--fg-muted`     | `#6B6560` | Disabled, placeholder text (exempt from WCAG contrast — see Accessibility) |
 
 **Border:**
 
-| Token | Value | Role |
-|---|---|---|
+| Token      | Value                       | Role                                 |
+| ---------- | --------------------------- | ------------------------------------ |
 | `--border` | `rgba(255, 255, 255, 0.08)` | Very subtle, barely visible (shadcn) |
 
 ### Light Mode Colors (`:root` — Warm Cream palette)
@@ -86,26 +86,26 @@ Palette choice: "Warm Cream" (option B from brainstorming). Achieves the "notice
 
 **Surfaces:**
 
-| Token | Value | Role |
-|---|---|---|
-| `--terminal` | `#EDE7DE` | Slightly deeper than bg — maintains "window into something deeper" even in light mode |
-| `--background` | `#F8F4EE` | Base background (shadcn) |
-| `--surface-1` | `#F2EDE6` | Zone backgrounds |
-| `--surface-2` | `#EBE5DC` | Elevated elements, blocks |
-| `--surface-3` | `#E3DCD2` | Hover states, active elements |
+| Token          | Value     | Role                                                                                  |
+| -------------- | --------- | ------------------------------------------------------------------------------------- |
+| `--terminal`   | `#EDE7DE` | Slightly deeper than bg — maintains "window into something deeper" even in light mode |
+| `--background` | `#F8F4EE` | Base background (shadcn)                                                              |
+| `--surface-1`  | `#F2EDE6` | Zone backgrounds                                                                      |
+| `--surface-2`  | `#EBE5DC` | Elevated elements, blocks                                                             |
+| `--surface-3`  | `#E3DCD2` | Hover states, active elements                                                         |
 
 **Foreground:**
 
-| Token | Value | Role |
-|---|---|---|
-| `--foreground` | `#2A2522` | Primary text (shadcn) |
+| Token            | Value     | Role                                                                                         |
+| ---------------- | --------- | -------------------------------------------------------------------------------------------- |
+| `--foreground`   | `#2A2522` | Primary text (shadcn)                                                                        |
 | `--fg-secondary` | `#756F6A` | Timestamps, captions (darkened from initial #8B8580 for 4.5:1 contrast on cream backgrounds) |
-| `--fg-muted` | `#B5AFA8` | Disabled, placeholder (exempt from WCAG contrast — see Accessibility) |
+| `--fg-muted`     | `#B5AFA8` | Disabled, placeholder (exempt from WCAG contrast — see Accessibility)                        |
 
 **Border:**
 
-| Token | Value | Role |
-|---|---|---|
+| Token      | Value                 | Role                                 |
+| ---------- | --------------------- | ------------------------------------ |
 | `--border` | `rgba(0, 0, 0, 0.08)` | Very subtle, barely visible (shadcn) |
 
 ### Mode-Independent Colors
@@ -114,31 +114,31 @@ Status and accent colors are the same in both modes — designed to be vivid aga
 
 **Status:**
 
-| Token | Value | Role |
-|---|---|---|
-| `--status-running` | `#5B9EE9` | Calm blue |
-| `--status-attention` | `#E5A84B` | Warm amber |
+| Token                | Value     | Role                       |
+| -------------------- | --------- | -------------------------- |
+| `--status-running`   | `#5B9EE9` | Calm blue                  |
+| `--status-attention` | `#E5A84B` | Warm amber                 |
 | `--status-completed` | `#6BBF6B` | Fresh, slightly warm green |
-| `--status-error` | `#D4726C` | Soft coral |
-| `--status-idle` | `#8B82A8` | Gray-purple |
+| `--status-error`     | `#D4726C` | Soft coral                 |
+| `--status-idle`      | `#8B82A8` | Gray-purple                |
 
 **Status color usage:** These colors are used as visual indicators — status dots, left border accents, badge backgrounds, and icon tints — not as text colors. Text rendered on status-colored backgrounds (e.g., inside badges) uses `#FFFFFF` or `--foreground` for contrast. The status colors themselves do not need to meet WCAG text contrast ratios against surface backgrounds because they serve as non-text graphical indicators (WCAG 1.4.11 requires 3:1 for graphical objects; all status colors meet this against dark mode surfaces, and in light mode the indicators are supplemented by shape/position so they are not contrast-dependent alone).
 
 **Accent / Primary:**
 
-| Token | Value | Role |
-|---|---|---|
-| `--primary` | `#4E9E96` | Warm teal/muted cyan (shadcn `--primary`, darkened from initial #5BA8A0 for contrast compliance) |
-| `--primary-foreground` | `#FFFFFF` | Text on primary/accent backgrounds (shadcn) |
+| Token                  | Value     | Role                                                                                             |
+| ---------------------- | --------- | ------------------------------------------------------------------------------------------------ |
+| `--primary`            | `#4E9E96` | Warm teal/muted cyan (shadcn `--primary`, darkened from initial #5BA8A0 for contrast compliance) |
+| `--primary-foreground` | `#FFFFFF` | Text on primary/accent backgrounds (shadcn)                                                      |
 
 `#FFFFFF` on `#4E9E96` yields ~3.3:1 (WCAG AA for large text/UI components at 3:1 minimum). Primary/accent is used for buttons and interactive highlights where text is rendered at `--text-body` (14px) or larger — meeting the large text/UI component threshold. For the rare case of small caption text on accent backgrounds, use `--foreground` instead.
 
 **Destructive:**
 
-| Token | Value | Role |
-|---|---|---|
-| `--destructive` | `#D4726C` | Soft coral (shadcn, same as `--status-error`) |
-| `--destructive-foreground` | `#FFFFFF` | Text on destructive backgrounds (shadcn) |
+| Token                      | Value     | Role                                          |
+| -------------------------- | --------- | --------------------------------------------- |
+| `--destructive`            | `#D4726C` | Soft coral (shadcn, same as `--status-error`) |
+| `--destructive-foreground` | `#FFFFFF` | Text on destructive backgrounds (shadcn)      |
 
 `#FFFFFF` on `#D4726C` yields ~3.3:1 (WCAG AA for large text/UI components). Same usage pattern as primary — destructive actions are buttons with 14px+ text.
 
@@ -146,20 +146,20 @@ Status and accent colors are the same in both modes — designed to be vivid aga
 
 These are set in both `:root` and `.dark` to complete shadcn's expected variable set. Values reference the semantic tokens above.
 
-| Token | Light Mode Value | Dark Mode Value | Role |
-|---|---|---|---|
-| `--card` | = `--surface-1` value | = `--surface-1` value | Card backgrounds |
-| `--card-foreground` | = `--foreground` value | = `--foreground` value | Card text |
-| `--popover` | = `--surface-1` value | = `--surface-1` value | Popover backgrounds |
-| `--popover-foreground` | = `--foreground` value | = `--foreground` value | Popover text |
-| `--secondary` | = `--surface-2` value | = `--surface-2` value | Secondary backgrounds |
-| `--secondary-foreground` | = `--foreground` value | = `--foreground` value | Secondary text |
-| `--muted` | = `--surface-2` value | = `--surface-2` value | Muted backgrounds |
-| `--muted-foreground` | = `--fg-secondary` value | = `--fg-secondary` value | Muted text |
-| `--accent` | = `--surface-3` value | = `--surface-3` value | Hover highlight backgrounds |
-| `--accent-foreground` | = `--foreground` value | = `--foreground` value | Hover highlight text |
-| `--input` | = `--border` value | = `--border` value | Input borders |
-| `--ring` | = `--primary` value | = `--primary` value | Focus rings |
+| Token                    | Light Mode Value         | Dark Mode Value          | Role                        |
+| ------------------------ | ------------------------ | ------------------------ | --------------------------- |
+| `--card`                 | = `--surface-1` value    | = `--surface-1` value    | Card backgrounds            |
+| `--card-foreground`      | = `--foreground` value   | = `--foreground` value   | Card text                   |
+| `--popover`              | = `--surface-1` value    | = `--surface-1` value    | Popover backgrounds         |
+| `--popover-foreground`   | = `--foreground` value   | = `--foreground` value   | Popover text                |
+| `--secondary`            | = `--surface-2` value    | = `--surface-2` value    | Secondary backgrounds       |
+| `--secondary-foreground` | = `--foreground` value   | = `--foreground` value   | Secondary text              |
+| `--muted`                | = `--surface-2` value    | = `--surface-2` value    | Muted backgrounds           |
+| `--muted-foreground`     | = `--fg-secondary` value | = `--fg-secondary` value | Muted text                  |
+| `--accent`               | = `--surface-3` value    | = `--surface-3` value    | Hover highlight backgrounds |
+| `--accent-foreground`    | = `--foreground` value   | = `--foreground` value   | Hover highlight text        |
+| `--input`                | = `--border` value       | = `--border` value       | Input borders               |
+| `--ring`                 | = `--primary` value      | = `--primary` value      | Focus rings                 |
 
 Note: shadcn's `--accent` maps to `--surface-3` (hover/active surface), not the teal accent color. This is intentional — shadcn uses `accent` for subtle hover highlights on menu items and list rows, which aligns with our surface-3 role. The teal accent color maps to `--primary`.
 
@@ -167,21 +167,21 @@ Note: shadcn's `--accent` maps to `--surface-3` (hover/active surface), not the 
 
 **Font families:**
 
-| Token | Value | Note |
-|---|---|---|
-| `--font-ui` | `'DM Sans', sans-serif` | Chosen from DM Sans / Plus Jakarta Sans direction. DM Sans selected for its slightly warmer geometry and better optical balance at UI sizes. |
-| `--font-mono` | `'JetBrains Mono', monospace` | Chosen from JetBrains Mono / Fira Code direction. JetBrains Mono selected for wider language support and cleaner ligatures. |
+| Token         | Value                         | Note                                                                                                                                         |
+| ------------- | ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--font-ui`   | `'DM Sans', sans-serif`       | Chosen from DM Sans / Plus Jakarta Sans direction. DM Sans selected for its slightly warmer geometry and better optical balance at UI sizes. |
+| `--font-mono` | `'JetBrains Mono', monospace` | Chosen from JetBrains Mono / Fira Code direction. JetBrains Mono selected for wider language support and cleaner ligatures.                  |
 
 **Font sizes (role hierarchy from UI/UX direction doc):**
 
-| Token | Value | Role |
-|---|---|---|
-| `--text-heading-1` | `1.5rem` (24px) | Page-level headings |
-| `--text-heading-2` | `1.25rem` (20px) | Section headings |
-| `--text-heading-3` | `1rem` (16px) | Sub-section headings, zone headers |
-| `--text-body` | `0.875rem` (14px) | Default body text, inbox items |
-| `--text-caption` | `0.75rem` (12px) | Timestamps, context lines, status text |
-| `--text-code` | `0.8125rem` (13px) | Monospace content, terminal output |
+| Token              | Value              | Role                                   |
+| ------------------ | ------------------ | -------------------------------------- |
+| `--text-heading-1` | `1.5rem` (24px)    | Page-level headings                    |
+| `--text-heading-2` | `1.25rem` (20px)   | Section headings                       |
+| `--text-heading-3` | `1rem` (16px)      | Sub-section headings, zone headers     |
+| `--text-body`      | `0.875rem` (14px)  | Default body text, inbox items         |
+| `--text-caption`   | `0.75rem` (12px)   | Timestamps, context lines, status text |
+| `--text-code`      | `0.8125rem` (13px) | Monospace content, terminal output     |
 
 14px body default chosen for information-dense UI — matches the "dense but scannable" inbox requirement without sacrificing readability.
 
@@ -189,15 +189,15 @@ Note: shadcn's `--accent` maps to `--surface-3` (hover/active surface), not the 
 
 Base unit: `4px` (locked).
 
-| Token | Value |
-|---|---|
-| `--space-1` | `4px` |
-| `--space-2` | `8px` |
-| `--space-3` | `12px` |
-| `--space-4` | `16px` |
-| `--space-5` | `20px` |
-| `--space-6` | `24px` |
-| `--space-8` | `32px` |
+| Token        | Value  |
+| ------------ | ------ |
+| `--space-1`  | `4px`  |
+| `--space-2`  | `8px`  |
+| `--space-3`  | `12px` |
+| `--space-4`  | `16px` |
+| `--space-5`  | `20px` |
+| `--space-6`  | `24px` |
+| `--space-8`  | `32px` |
 | `--space-10` | `40px` |
 | `--space-12` | `48px` |
 | `--space-16` | `64px` |
@@ -206,11 +206,12 @@ Base unit: `4px` (locked).
 
 shadcn v4 uses a single `--radius` base with calculated variants. We set the base and let shadcn derive the scale:
 
-| Token | Value | Note |
-|---|---|---|
+| Token      | Value          | Note                                                                  |
+| ---------- | -------------- | --------------------------------------------------------------------- |
 | `--radius` | `0.5rem` (8px) | Base radius — shadcn derives sm/md/lg/xl/2xl via `calc()` multipliers |
 
 shadcn's derived scale from `--radius: 0.5rem`:
+
 - `--radius-sm`: `calc(0.5rem * 0.6)` = 4.8px (badges, tags)
 - `--radius-md`: `calc(0.5rem * 0.8)` = 6.4px (inputs)
 - `--radius-lg`: `0.5rem` = 8px (cards, blocks)
@@ -220,20 +221,20 @@ This aligns with our target: ~4px small, ~8px blocks/cards, ~12px modals.
 
 ### Motion
 
-| Token | Value | Usage |
-|---|---|---|
-| `--duration-snappy` | `125ms` | User-initiated actions (selecting, collapsing, opening) |
-| `--duration-gentle` | `250ms` | System-initiated changes (status transitions, items settling) |
-| `--duration-fade` | `200ms` | Opacity-only transitions (cross-fades, fade in/out) |
-| `--ease-snappy` | `cubic-bezier(0, 0, 0.2, 1)` | Ease-out for user actions |
-| `--ease-gentle` | `cubic-bezier(0.4, 0, 0.2, 1)` | Ease-in-out for system changes |
+| Token               | Value                          | Usage                                                         |
+| ------------------- | ------------------------------ | ------------------------------------------------------------- |
+| `--duration-snappy` | `125ms`                        | User-initiated actions (selecting, collapsing, opening)       |
+| `--duration-gentle` | `250ms`                        | System-initiated changes (status transitions, items settling) |
+| `--duration-fade`   | `200ms`                        | Opacity-only transitions (cross-fades, fade in/out)           |
+| `--ease-snappy`     | `cubic-bezier(0, 0, 0.2, 1)`   | Ease-out for user actions                                     |
+| `--ease-gentle`     | `cubic-bezier(0.4, 0, 0.2, 1)` | Ease-in-out for system changes                                |
 
 **`prefers-reduced-motion` strategy:** Per the UI/UX direction doc, position and size animations are removed but opacity fades are kept. Implementation: under `prefers-reduced-motion: reduce`, set `--duration-snappy` and `--duration-gentle` to `0ms` (removes spatial movement), but keep `--duration-fade` unchanged (preserves smooth opacity transitions). Components use `--duration-snappy`/`--duration-gentle` for transforms/position and `--duration-fade` for opacity.
 
 ### Shadows
 
-| Token | Light Mode | Dark Mode | Usage |
-|---|---|---|---|
+| Token            | Light Mode                       | Dark Mode                       | Usage                                                  |
+| ---------------- | -------------------------------- | ------------------------------- | ------------------------------------------------------ |
 | `--shadow-float` | `0 8px 24px rgba(0, 0, 0, 0.12)` | `0 8px 24px rgba(0, 0, 0, 0.4)` | Floating inbox item, modals, command palette, tooltips |
 
 Per-mode values: dark backgrounds need stronger shadow opacity to be visible. Only for elements that float above the main canvas layer. All other depth via surface color layering.

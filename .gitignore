@@ -4,6 +4,7 @@ node_modules/
 # Build output
 dist/
 build/
+storybook-static/
 
 # Environment
 .env
@@ -26,6 +27,10 @@ npm-debug.log*
 
 # Coverage
 coverage/
+
+# Playwright
+playwright-report/
+test-results/
 
 # TypeScript
 *.tsbuildinfo
