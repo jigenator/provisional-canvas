@@ -16,6 +16,7 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "typecheck": "tsc -b --noEmit",
     "test": "vitest --project=unit",
     "test:run": "vitest run --project=unit",
     "test:ui": "vitest --ui --project=unit",
